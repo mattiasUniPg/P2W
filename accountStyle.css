@@ -1,0 +1,406 @@
+:root {
+    --primary-color: white;
+    --secondary-color: red;
+    --third-color: green;
+    --third-color-light: #005005;
+    --text-color: black;
+}
+
+@font-face {
+    font-family: "Roboto-Light";
+    src: url("../fonts/RobotoLight.ttf");
+}
+
+@font-face {
+    font-family: "Roboto-Regular";
+    src: url("../fonts/RobotoRegular.ttf");
+}
+
+* {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+*::-webkit-scrollbar {
+    display: none;
+}
+
+html, body {
+    margin: 0px;
+    padding: 0px;
+    
+    min-height: 100vh;
+    
+    position: relative;
+    
+    box-sizing: border-box;
+    
+    font-family: "Roboto-Regular";
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.navBar {
+    width: 100vw;
+    height: 60px;
+    
+    background-color: var(--primary-color);
+    
+    position: fixed;
+    z-index: 10;
+    
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    
+    box-shadow: 0px -5px 10px 5px green;
+}
+
+.tabletNav {
+    display: none;
+}
+
+.navBarMenu {
+    width: 30px;
+    height: 30px;
+    
+    margin-right: 10px;
+    
+    -webkit-mask:url(../img/icons/menuIcon.svg) center/contain;
+    background-color: var(--text-color);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.navItem {
+    margin-left: 10px;
+    margin-right: 10px;
+    
+    font-weight: 500;
+    font-size: 17px;
+}
+
+.navItem:hover {
+    color: var(--third-color);
+}
+
+.navBarlogo {
+    width: calc(886px / 5);
+    height: calc(206px / 5);
+    
+    background-image: url(../img/icons/logo.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.navBarLastitem {
+    margin-right: 20px;
+}
+
+.navItem.image {
+    width: 30px;
+    height: 30px;
+}
+
+#accountIcon {
+    width: 100%;
+    height: 100%;
+    
+    -webkit-mask:url(../img/icons/accountIcon.svg) center/contain;
+    background-color: black;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.navItem.image:hover #accountIcon{
+    background-color: var(--third-color);
+}
+
+.main { 
+    width: 100vw;
+    
+    position: relative;
+    top: 60px;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.titoloPage {
+    margin-top: 25px;
+    margin-left: 10px;
+    
+    font-weight: bolder;
+    font-size: 30px;
+    
+    color: var(--third-color);
+}
+
+.nomeUtente {
+    margin-top: 25px;
+    margin-left: 10px;
+    
+    font-weight: bold;
+    font-size: 22px;
+    
+    color: var(--third-color);
+}
+
+.emailUtente {
+    margin-top: 15px;
+    margin-left: 10px;
+}
+
+.telefonoUtente {
+    margin-top: 15px;
+    margin-left: 10px;
+}
+
+.cambiaPassword {
+    margin-top: 15px;
+    margin-left: 10px;
+}
+
+.esciUtente {
+    margin-top: 15px;
+    margin-left: 10px;
+}
+
+.button {
+    height: 35px;
+    
+    background-color: var(--third-color);
+    color: white;
+    
+    border: none;
+    border-radius: 10px;
+}
+
+.button:hover {
+    background-color: var(--third-color-light);
+}
+
+.ordiniBox {
+    width: 100%;
+    
+    margin-top: 40px;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.ordiniUtente {
+    margin-left: 10px;
+    
+    font-weight: bold;
+    font-size: 22px;
+    
+    color: var(--third-color);
+}
+
+.ordineBox {
+    width: calc(100% - 20px);
+    
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    
+    background-color: rgba(239,239,239,1);
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.ordineBoxItem.titolo {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.ordineBoxItem {
+    margin-left: 10px;
+    margin-top: 2.5px;
+    margin-bottom: 2.5px;
+}
+
+.noOrdini {
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.footer {
+    width: 100vw;
+    
+    background-color: var(--third-color);
+    
+    position: relative;
+    top: 60px;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    color: white;
+}
+
+.footerItem {
+    width: 100vw;
+    
+    margin-top: 30px;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.footerItemTitle {
+    width: 100%;
+    
+    margin-top: 10px;
+    margin-bottom: 10px;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    
+    font-weight: bold;
+}
+
+.footerItemText {
+    width: 100%;
+    
+    margin-top: 10px;
+    margin-bottom: 10px;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.footerItemTitleTxt {
+    margin-left: 10px;
+}
+
+.footerItemTextTxt {
+    margin-left: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.linkTxt:hover {
+    color: #003d00;
+}
+
+.linksFooter {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#facebookLogoFooter {
+    width: 20px;
+    height: 20px;
+    
+    margin-right: 5px;
+    
+    -webkit-mask:url(../img/icons/facebookLogo.svg) center/contain no-repeat;
+    background-color: white;
+}
+
+#facebookLogoFooter:hover{
+    background-color: #003d00;
+}
+
+#instagramLogoFooter {
+    width: 20px;
+    height: 20px;
+    
+    margin-left: 10px;
+    margin-right: 10px;
+    
+    -webkit-mask:url(../img/icons/instagramLogo.svg) center/contain no-repeat;
+    background-color: white;
+}
+
+#instagramLogoFooter:hover {
+    background-color: #003d00;
+}
+
+#whatsappLogoFooter {
+    width: 20px;
+    height: 20px;
+    
+    margin-left: 10px;
+    
+    -webkit-mask:url(../img/icons/whatsappLogo.svg) center/contain no-repeat;
+    background-color: white;
+}
+
+#whatsappLogoFooter:hover {
+    background-color: #003d00;
+}
+
+@media only screen and (min-width: 600px) {      
+    
+}
+
+@media only screen and (min-width: 768px) {  
+    .tabletNav {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .phoneNav {
+        display: none;
+    }
+    
+    .footer {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    
+    .footerItem {
+        width: 50%;
+    }
+}
+
+@media only screen and (min-width: 1000px) {  
+    .footerItem {
+        width: 33%;
+        
+        margin-top: 50px;
+        margin-bottom: 30px;
+    }
+    
+    .footerItemTitle {     
+        justify-content: center;
+        align-items: center;
+        
+        text-align: center;
+    }
+    
+    .footerItemText {
+        justify-content: center;
+        align-items: center;
+        
+        text-align: center;
+    }
+}
+
+@media only screen and (min-width: 1300px) {  
+    
+}

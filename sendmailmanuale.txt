@@ -1,0 +1,8 @@
+sendmail applicazione che modifichi account generalità
+autenticazione 2 fattori. file rar (cose da modificare prima utilizzo"
+"extension=php_openssl.dll
+[mail function] sendmail_from=" "@gmail.com
+sendmail_path="C:\xampp\sendmail\sendmail.exe-t"
+mail.add_x_header=Off
+SALVA IN C:\xampp\sendmail
+APRO PANNELLO XAMP Apache config (php.ini) Control+F cerco @ imposto mail

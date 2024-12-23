@@ -1,67 +1,90 @@
-<html lang="it">
-    <head>
-        <link rel="stylesheet" href="Assets/css/loginStyle.css" type="text/css"/>
-        <script src="Assets/js/jquery-3.6.0.js"></script>
-        <title>P2W</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div class="navBar">
-            <a href="index.php"><div class="navBarlogo"></div></a>
-            <div class="tabletNav">
-                <div class="navItem"><a href="index.php">Inventory</a></div>
-                <div class="navItem"><a href="index.php">Our Mission</a></div>
-                <div class="navItem"><a href="index.php">Contact</a></div>
-                <div class="navItem"><a href="index.php">FUTURE</a></div>
-                <div class="navItem"><a href="ordina.php">Shop</a></div>
-            </div>
-            <div class="phoneNav">
-                <div class="navBarMenu"></div>
-            </div>
-        </div>
+<?php
+if(isset($_POST['register-submit']))
+{
+    require 'database.php';
+    
+    $nome = $_POST['nomeUtente'];
+    $cognome = $_POST['cognomeUtente'];
+    $email = $_POST['emailUtente'];
+    $password = $_POST['pwdUtente'];
+    $passwordRepeat = $_POST['rptPwdUtente'];
+    $phone = $_POST['telUtente'];
+    $createDate = date("Y/m/d");
+    $createHour = date('H:i:s');
+    $vKey = md5(time().$nome);
+    
+    $linkVerification = "http://localhost/Burgerchain/Assets/php/verify.php?vkey=$vKey";
+    
+    $utente = [$nome,$cognome,$email,$password,$passwordRepeat,$birth,$phone];
+    
+    $sql = "SELECT email FROM utente WHERE email=?";
+    $stmt = mysqli_stmt_init($conn);
+    
+    if(!mysqli_stmt_prepare($stmt, $sql))
+    {
+        header("Location: ../../register.php?error=sqlerror");
+        exit();
+    }
+    else
+    {
+        mysqli_stmt_bind_param($stmt, "s", $email);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_store_result($stmt);
+        $resultCheck = mysqli_stmt_num_rows($stmt);
         
-        <div class="main"> 
-            <div class="formContainer">
-                <div class="formTitle">Register</div>
-                <form class="form" action="Assets/php/register.php" method="post">
-                    <span class="item text first">Name : </span><input type="text" placeholder="Name" name="nameUser" class="item first" required>
-                    <span class="item text">Surname : </span><input type="text" placeholder="Surname" name="SurnameUser" class="item" required>
-                    <span class="item text">Email : </span><input type="email" placeholder="Email" name="emailUser" class="item" required>
-                    <span class="item text">Password : </span><input type="password" placeholder="Password" name="pwdUser" class="item" required>
-                    <span class="item text">Repeat Password : </span><input type="password" placeholder="Repeat password" name="rptPwdUser" class="item" required>
-                    <input type="submit" name="register-submit" value="Register" class="item last button" id="lastNavItem">
-                </form>
-            </div>
+        if($resultCheck > 0)
+        {
+            header("Location: ../../register.php?error=emailTaken");
+            exit();
+        }
+        else 
+        {
+            if($password != $passwordRepeat)
+            {
+                header("Location: ../../register.php?error=pwdMatch");
+                exit();
+            }
+            else
+            {
+                $sql = "INSERT INTO utente(nome,cognome,email,password,telefono,dataCreazione,oraCreazione,vKey) VALUES(?,?,?,?,?,?,?,?)";
+                $stmt = mysqli_stmt_init($conn);
             
-            <button class="buttonMain" onclick="location.href = 'login.php';">Login</button>
-        </div>
-        
-        <div class="footer">
-            <div class="footerItem">
-            </div>
-            <div class="footerItem">
-                <div class="footerItemTitle">
-                    <span class="footerItemTitleTxt">Contact</span>
-                </div>
-                <div class="footerItemText">
-                    <span class="footerItemTextTxt">Email: </span>
-                    <span class="footerItemTextTxt"></span>
-                </div>
-            </div>
-            <div class="footerItem">
-                <div class="footerItemTitle">
-                    <span class="footerItemTitleTxt">Shipping delivery</span>
-                </div>
-                <div class="footerItemText">
-                    <span class="footerItemTextTxt">Everywhere in USA EU Sahara Asia</span>
-                </div>
-            </div>
-            <div class="footerItem">
-                <div class="footerItemTitle">
-                    <span class="footerItemTitleTxt">© 2021 P2W All Right Reserved.</span>
-                </div>
-            </div>
-        </div>
-    </body>
-</html>
+                if(!mysqli_stmt_prepare($stmt, $sql))
+                {
+                    header("Location: ../../register.php?error=sqlerror");
+                    exit();
+                }
+                else
+                {
+                    $passwordCriptata = password_hash($password, PASSWORD_DEFAULT);
+                
+                    mysqli_stmt_bind_param($stmt, "ssssssss", $nome,$cognome,$email,$passwordCriptata,$phone,$createDate,$createHour,$vKey);
+                    mysqli_stmt_execute($stmt);
+                        
+                    $to = $email;
+                    $subject = "Verifica Account";
+                    $html = file_get_contents('../mailTemplates/verificationTemplate.html');
+                    $link = "<a href='$linkVerification'>Verifica Account</a>";
+                    $html =  str_replace("{{NOME}}",$nome . " " . $cognome,$html);
+                    $html =  str_replace("{{LINK}}",$link,$html);
+                    $headers = "From: burgerchainit@gmail.com" . "\r\n";
+                    $headers .= "MIME-Version: 1.0" . "\r\n";
+                    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+
+                    mail($to, $subject, $html, $headers);
+
+                    header("Location: ../../index.php?signup=success");
+                    exit();
+                }
+            }
+        }
+    }
+    
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+}
+else
+{
+    header("Location: ../../index.php");
+    exit();
+}
